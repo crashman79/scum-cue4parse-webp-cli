@@ -16,6 +16,7 @@ The SCUM DB database and site are separate and are not part of this repository.
 - BC7 texture support for pile and icon textures.
 - `SCUM_EXTRACTION_MEMORY_GB` to cap extractor memory on smaller hosts.
 - AES key is read from the environment, not committed to the repository.
+- Optional upstream debug patch in `patches/` for landscape conversion.
 
 ## Requirements
 

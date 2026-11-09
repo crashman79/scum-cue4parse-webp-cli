@@ -1,0 +1,12 @@
+diff --git a/CUE4Parse-Conversion/Meshes/MeshConverter.cs b/CUE4Parse-Conversion/Meshes/MeshConverter.cs
+index ed6a00b7..f42629e2 100644
+--- a/CUE4Parse-Conversion/Meshes/MeshConverter.cs
++++ b/CUE4Parse-Conversion/Meshes/MeshConverter.cs
+@@ -608,6 +608,7 @@ public static bool TryConvert(this ALandscapeProxy landscape, ULandscapeComponen
+         // For image export
+         int width = maxX - minX + 1;
+         int height = maxY - minY + 1;
++        Console.Error.WriteLine($"[TryConvert] extent: width={width} height={height} px={width * (long)height} components={landscapeComponents.Length} mem={GC.GetTotalMemory(false)}");
+ 
+         CStaticMeshLod? landscapeLod = null;
+         if (flags.HasFlag(ELandscapeExportFlags.Mesh))
