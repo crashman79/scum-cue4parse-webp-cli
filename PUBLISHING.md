@@ -38,7 +38,7 @@ git remote add origin <your-public-repo-url>
 git push -u origin main
 ```
 
-Suggested repository name: `cue4parse-webp-cli`.
+Suggested repository name: `scum-cue4parse-webp-cli`.
 
 ## What must not be included
 
