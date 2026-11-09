@@ -1,0 +1,62 @@
+# Build outputs
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+publish*/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Output directories
+output/
+extracted/
+exports/
+extraction/
+full_extraction/
+full_extraction_*/
+test_*/
+perf_*/
+perf_*_test/
+perf_*_detailed/
+performance_test/
+
+# Log files
+*.log
+extraction_*.log
+*_monitor.log
+*_analysis.log
+*_test.log
+
+# Visual Studio cache/options
+.vs/
+.vscode/
+
+# Cursor IDE (keep .cursorrules and .cursorignore in repo)
+.cursor/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Rider
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+CUE4Parse/

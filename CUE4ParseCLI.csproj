@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>CUE4ParseCLI</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- Default entry point: Program.Main (auto-detects UI mode) -->
+    <!-- Can be overridden with -p:StartupObject=CUE4ParseCLI.ProgramTUI or CUE4ParseCLI.ProgramGUI -->
+    <StartupObject Condition="'$(StartupObject)' == ''">CUE4ParseCLI.Program</StartupObject>
+    
+    <!-- Globalization: Use invariant mode to avoid ICU library dependencies -->
+    <!-- This makes the executable truly self-contained (no system ICU libraries required) -->
+    <!-- Disables culture-specific formatting, which is fine for file extraction -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+    
+    <!-- Code Analysis / Linting Configuration -->
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>Recommended</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <!-- Keep warnings as warnings (not errors) to avoid breaking builds during development -->
+  </PropertyGroup>
+  
+  <!-- Self-contained publishing configuration (only used during publish) -->
+  <PropertyGroup Condition="'$(PublishSelfContained)' == 'true'">
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <PublishTrimmed>false</PublishTrimmed>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <!-- Extract native libraries to temp directory for single-file apps -->
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../CUE4Parse/CUE4Parse/CUE4Parse.csproj" />
+    <ProjectReference Include="../CUE4Parse/CUE4Parse-Conversion/CUE4Parse-Conversion.csproj" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <!-- BCnEncoder.NET: pure-managed BC1-BC7 decoder/encoder (no native deps).
+         Used to decode PF_BC7 textures, which the bundled native Detex build cannot handle. -->
+    <PackageReference Include="BCnEncoder.Net" Version="2.3.0" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    <!-- SkiaSharp native libraries for Linux (NoDependencies variant for truly self-contained builds) -->
+    <!-- NoDependencies version minimizes external system library dependencies (fontconfig, etc.) -->
+    <!-- This ensures the executable works on any Linux system without requiring additional packages -->
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.9" />
+    <!-- Avalonia UI for true GUI (native windows, buttons, text fields) -->
+    <PackageReference Include="Avalonia" Version="11.2.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.0" />
+    <!-- Note: Not using Avalonia.Skia to avoid native library issues in single-file apps -->
+  </ItemGroup>
+
+  <!-- Exclude alternative entry points from default build to avoid multiple Main() methods -->
+  <!-- The main Program.cs auto-detects UI mode, so separate executables aren't strictly necessary -->
+  <!-- But they can be built separately if needed with StartupObject override -->
+  <ItemGroup>
+    <Compile Remove="ProgramTUI.cs" />
+    <Compile Remove="ProgramGUI.cs" />
+  </ItemGroup>
+
+</Project>
