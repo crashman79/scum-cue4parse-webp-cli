@@ -36,8 +36,6 @@ extraction_*.log
 .vs/
 .vscode/
 
-# Cursor IDE (keep .cursorrules and .cursorignore in repo)
-.cursor/
 
 # NuGet packages
 *.nupkg
